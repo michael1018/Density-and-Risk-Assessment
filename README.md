@@ -70,18 +70,3 @@ A machine learning model is trained to classify the danger level using either:
 4. Train the classifier
 5. Evaluate performance (accuracy, confusion matrix)
 
----
-
-📂 Project Structure
-
-.
-├── data/
-│   └── danger_data.csv             # Aggregated dataset
-├── code/
-│   └── aerial_data_feature_extraction.ipynb     
-│   └── merged_csv.ipynb
-│   └── feature_extraction.ipynb
-│   └── Train Random Forest Model.ipynb
-│   └── Train XGBoost Model.ipynb
-├── README.md
-
