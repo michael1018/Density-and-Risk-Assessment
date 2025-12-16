@@ -1,6 +1,17 @@
 # 🛡️ Density and Risk Assessment Based on Mobile Sensing Technology
 
-This project leverages data from multiple sensors to classify human activities into **danger levels** ranging from 1 (lowest) to 7 (highest). The model is trained using features extracted from **sensor logs**, **audio data**, and **aerial data**.
+This project explores a **multimodal risk assessment system** that leverages mobile sensing and aerial data to classify human activities into **danger levels ranging from 1 (lowest risk) to 7 (highest risk)**. By fusing sensor logs, audio signals, and aerial observations, the system demonstrates how low-cost, widely available devices (smartphones and drones) can support **context-aware safety monitoring** in urban and campus environments.
+
+---
+
+## 📌 Project Overview
+
+The system integrates data collected from:
+
+* **Mobile phones** (motion, altitude, pressure, audio)
+* **Aerial platforms (drones)** (crowd density, people count, temperature)
+
+Using feature engineering and ensemble machine learning models, the project classifies human activities into predefined danger levels that reflect increasing environmental and behavioral risk.
 
 ---
 
@@ -8,65 +19,120 @@ This project leverages data from multiple sensors to classify human activities i
 
 ### ✅ Collected Data Types
 
-- **Sensor Logs**
-  - Acceleration in the x-axis
-  - Acceleration in the y-axis
-  - Acceleration in the z-axis
-  - Relative altitude
-  - Pressure
-  - Acceleration magnitude (calculated)
+#### 📱 Sensor Logs (Mobile Devices)
 
-- **Audio**
-  - MFCCs (Mel-Frequency Cepstral Coefficients)
-  - Root Mean Square Energy
-  - Spectral Centroid
-  - Zero Crossing Rate
+* Acceleration (x-axis)
+* Acceleration (y-axis)
+* Acceleration (z-axis)
+* Acceleration magnitude (calculated)
+* Relative altitude
+* Atmospheric pressure
 
-- **Aerial Data**
-  - Average temperature
-  - Average people count
+#### 🔊 Audio Data
 
-All data is **organized, labeled**, and **aggregated** into a single `.csv` file for model training.
+* MFCCs (Mel-Frequency Cepstral Coefficients)
+* Root Mean Square (RMS) energy
+* Spectral centroid
+* Zero Crossing Rate
+
+#### 🚁 Aerial Data (Drone)
+
+* Average surface temperature (thermal imaging)
+* Average people count
+* Crowd density estimates
+
+All modalities are **time-aligned, labeled, and aggregated** into a unified dataset. The final output is a **single CSV file** used for model training and evaluation.
 
 ---
 
 ## 🧪 Feature Engineering
 
-All features are extracted from the raw data and aggregated over time windows to form structured instances in the dataset.
+Raw data streams are segmented into fixed-size time windows and transformed into structured features suitable for machine learning.
 
-- Feature extraction completed ✅
-- Aggregated CSV file ready for training ✅
+* Feature extraction completed ✅
+* Multimodal feature fusion completed ✅
+* Aggregated CSV file ready for training ✅
 
 ---
 
 ## ⚠️ Danger Level Definition
 
-Each sample in the dataset is assigned a **danger level label** from 1 to 7, based on the type of human activity:
+Each data sample is labeled with a **danger level (1–7)** based on the observed activity:
 
-| Danger Level | Activity Description            |
-|--------------|---------------------------------|
-| 1            | walking                         |
-| 2            | running                         |
-| 3            | play_basketball_alone           |
-| 4            | walking_at_7_floor              |
-| 5            | play_basketball_with_kid        |
-| 6            | walking_while_using_iphone      |
-| 7            | danger_running                  |
+| Danger Level | Activity Description       |
+| ------------ | -------------------------- |
+| 1            | Walking                    |
+| 2            | Running                    |
+| 3            | Play basketball alone      |
+| 4            | Walking at 7th floor       |
+| 5            | Play basketball with kid   |
+| 6            | Walking while using iPhone |
+| 7            | Danger running             |
+
+These labels represent increasing combinations of **density, kinetic energy, and behavioral risk**.
 
 ---
 
 ## 🤖 Model Training
 
-A machine learning model is trained to classify the danger level using either:
+The danger-level classification task is modeled as a **7-class supervised learning problem**.
 
-- **Random Forest**
-- **XGBoost**
+### Models Used
 
-### Pipeline
+* **Random Forest**
+* **XGBoost**
 
-1. Load the CSV file
-2. Preprocess data
-3. Split into training and test sets
-4. Train the classifier
-5. Evaluate performance (accuracy, confusion matrix)
+### Training Pipeline
 
+1. Load aggregated CSV dataset
+2. Preprocess and normalize features
+3. Split data into training and test sets (stratified)
+4. Train ensemble classifier
+5. Evaluate performance using:
+
+   * Accuracy
+   * Confusion matrix
+   * Precision / Recall / F1-score
+
+Both Random Forest and XGBoost achieved **perfect accuracy (1.00)** on the balanced test set, demonstrating strong discriminative power of the engineered features.
+
+---
+
+## 📊 Experimental Highlights
+
+* Multimodal sensor fusion significantly improves risk classification
+* Ensemble models perform exceptionally well on engineered features
+* Leave-One-Activity-Out evaluation reveals opportunities for improving generalization
+
+---
+
+## 🛠️ Platform & Tools
+
+* **Python**
+* **Scikit-learn**
+* **XGBoost**
+* **Google Colab** (model training)
+
+---
+
+## 🔮 Future Work
+
+* Real-time, on-device inference (mobile & drone edge deployment)
+* Deep learning-based people counting (YOLO / Mask R-CNN)
+* Continuous or probabilistic risk scoring
+* Larger, more diverse datasets across environments and populations
+* Human-in-the-loop feedback for adaptive risk assessment
+
+---
+
+## 📄 Authors
+
+* Micheal Lai
+* Uchechukwu Uboh
+* Joshua Hill
+
+---
+
+## 📌 Summary
+
+This project demonstrates the feasibility of **mobile and aerial sensing combined with ensemble learning** for accurate, context-aware danger assessment. The approach highlights a scalable foundation for smart campus safety, crowd monitoring, and urban risk management systems.
